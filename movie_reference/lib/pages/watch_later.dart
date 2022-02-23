@@ -3,7 +3,7 @@ import 'package:movie_reference/pages/movie_detail.dart';
 import 'package:movie_reference/pages/tv_detail.dart';
 import 'package:movie_reference/prefs/shared_pref.dart';
 import 'package:movie_reference/styles.dart';
-import 'package:movie_reference/widgets/movie_item.dart';
+// import 'package:movie_reference/widgets/movie_item.dart';
 import 'package:movie_reference/widgets/my_shimmer.dart';
 
 class WatchLater extends StatefulWidget {

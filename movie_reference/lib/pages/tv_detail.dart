@@ -9,6 +9,7 @@ import 'package:movie_reference/models/tv_show_model.dart';
 import 'package:movie_reference/prefs/saved_movie.dart';
 import 'package:movie_reference/prefs/shared_pref.dart';
 import 'package:movie_reference/styles.dart';
+import 'package:movie_reference/widgets/tv_item.dart';
 // import 'package:movie_reference/styles.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -85,7 +86,7 @@ class _TVDetailState extends State<TVDetail> {
               WatchListMovie.saveList();
               setState(() {});
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text("Added to Watch List"),
                   behavior: SnackBarBehavior.fixed,
                 ),
@@ -98,7 +99,7 @@ class _TVDetailState extends State<TVDetail> {
               WatchListMovie.saveList();
               setState(() {});
               ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Removed from Watch List")));
+                  const SnackBar(content: Text("Removed from Watch List")));
             }
           },
           child: Container(
@@ -140,6 +141,7 @@ class _TVDetailState extends State<TVDetail> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     image: DecorationImage(
+                      onError: (exception, stackTrace) => const DummyTVItem(),
                         image: NetworkImage(tvDetail.posterPath.toString()),
                         fit: BoxFit.cover),
                   ),
@@ -162,6 +164,7 @@ class _TVDetailState extends State<TVDetail> {
                             width: 202.5,
                             child: Image.network(
                               tvDetail.posterPath.toString(),
+                              errorBuilder: (context, error, stackTrace) => const DummyTVItem(errorText: "TV Show Image Not Found",),
                               fit: BoxFit.cover,
                             ),
                           ),

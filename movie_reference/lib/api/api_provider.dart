@@ -9,26 +9,23 @@ class ApiProvider {
       Uri.parse("https://api.themoviedb.org/3/$endPoint&api_key=$apiKey");
   static String apiKey = "f2e58427348f0cdfefa721f58ba7cc0e";
 
-  Future<Movie> getMovieDetails(String id)async{
+  Future<Movie> getMovieDetails(String id) async {
     http.Response response;
-    response =
-        await http.get(baseApiUrl("movie/$id?language=en-US"));
+    response = await http.get(baseApiUrl("movie/$id?language=en-US"));
     final jsonData = jsonDecode((response.body).toString());
     return Movie.fromJson(jsonData);
   }
-  
-  Future<TvShow> getTVDetails(String id)async{
+
+  Future<TvShow> getTVDetails(String id) async {
     http.Response response;
-    response =
-        await http.get(baseApiUrl("tv/$id?language=en-US"));
+    response = await http.get(baseApiUrl("tv/$id?language=en-US"));
     final jsonData = jsonDecode((response.body).toString());
     return TvShow.fromJson(jsonData);
   }
 
-  Future<Person> getPersonDetails(String id)async{
+  Future<Person> getPersonDetails(String id) async {
     http.Response response;
-    response =
-        await http.get(baseApiUrl("tv/$id?language=en-US"));
+    response = await http.get(baseApiUrl("tv/$id?language=en-US"));
     final jsonData = jsonDecode((response.body).toString());
     return Person.fromJson(jsonData);
   }
@@ -110,5 +107,35 @@ class ApiProvider {
     final jsonData = jsonDecode((response.body).toString());
     List data = List.from(jsonData["results"]);
     return data.map((e) => Person.fromJson(e)).toList().cast();
+  }
+
+  Future<List<Person>> searchPerson(String query) async {
+    http.Response response;
+    response = await http
+        .get(baseApiUrl("search/person?language=en-US&page=1&query=" + query));
+    final jsonData = jsonDecode((response.body).toString());
+    List data = List.from(jsonData["results"]);
+    data.removeWhere((element) => element["name"]==null||element["name"]==""||element["profile_path"]==null);
+    return data.map((e) => Person.fromJson(e)).toList().cast();
+  }
+
+  Future<List<TvShow>> searchTVShows(String query) async {
+    http.Response response;
+    response = await http
+        .get(baseApiUrl("search/tv?language=en-US&page=1&query=" + query));
+    final jsonData = jsonDecode((response.body).toString());
+    List data = List.from(jsonData["results"]);
+    data.removeWhere((element) => element["name"]==null||element["name"]==""||element["poster_path"]==null);
+    return data.map((e) => TvShow.fromJson(e)).toList().cast();
+  }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    http.Response response;
+    response = await http
+        .get(baseApiUrl("search/movie?language=en-US&page=1&query=" + query));
+    final jsonData = jsonDecode((response.body).toString());
+    List data = List.from(jsonData["results"]);
+    data.removeWhere((element) => element["title"]==null||element["name"]==""||element["poster_path"]==null);
+    return data.map((e) => Movie.fromJson(e)).toList().cast();
   }
 }

@@ -1,7 +1,7 @@
 class TvShow {
   TvShow({
     required this.backdropPath,
-    required this.firstAirDate,
+    // required this.firstAirDate,
     required this.genreIds,
     required this.id,
     required this.name,
@@ -16,7 +16,7 @@ class TvShow {
   });
 
   String backdropPath;
-  DateTime firstAirDate;
+  DateTime? firstAirDate;
   List<int> genreIds;
   int id;
   String name;
@@ -31,7 +31,7 @@ class TvShow {
 
   factory TvShow.fromJson(Map<String, dynamic> json) => TvShow(
         backdropPath: json["backdrop_path"] ?? "",
-        firstAirDate: DateTime.parse(json["first_air_date"]),
+        // firstAirDate: DateTime.parse(json["first_air_date"]),
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         name: json["name"],
@@ -41,15 +41,15 @@ class TvShow {
         overview: json["overview"],
         popularity:
             json["popularity"] != null ? json["popularity"].toDouble() : 0.0,
-        posterPath: "https://image.tmdb.org/t/p/w500/" + json["poster_path"],
+        posterPath: json["poster_path"]==null?"":"https://image.tmdb.org/t/p/w500/" + json["poster_path"],
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
 
   Map<String, dynamic> toJson() => {
         "backdrop_path": backdropPath,
-        "first_air_date":
-            "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
+        // "first_air_date":
+        //     "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
         "id": id,
         "name": name,
@@ -157,7 +157,7 @@ class TvShowDetailsClass {
         originalName: json["original_name"],
         overview: json["overview"],
         popularity: json["popularity"].toDouble(),
-        posterPath: "https://image.tmdb.org/t/p/w500/"+json["poster_path"],
+        posterPath: json["poster_path"]==null?"":"https://image.tmdb.org/t/p/w500/"+json["poster_path"],
         // productionCompanies: List<Network>.from(json["production_companies"].map((x) => Network.fromJson(x))),
         // productionCountries: List<ProductionCountry>.from(json["production_countries"].map((x) => ProductionCountry.fromJson(x))),
         // seasons: List<Season>.from(json["seasons"].map((x) => Season.fromJson(x))),

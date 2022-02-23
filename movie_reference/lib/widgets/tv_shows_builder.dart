@@ -33,6 +33,10 @@ class TVShowsBuilder extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<TvShow> listData = List.from(snapshot.data!.toList());
+                if (listData.isEmpty) {
+                  return const Text("No Data",
+                      style: TextStyle(color: Colors.grey));
+                }
                 return SizedBox(
                   height: 200,
                   child: ListView(
@@ -48,6 +52,10 @@ class TVShowsBuilder extends StatelessWidget {
                     ],
                   ),
                 );
+              }
+              if (snapshot.hasError) {
+                return const Text("No Data",
+                    style: TextStyle(color: Colors.grey));
               }
               return SizedBox(
                 height: 200,

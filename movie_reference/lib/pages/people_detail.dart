@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:movie_reference/models/person_model.dart';
 // import 'package:movie_reference/models/movie_model.dart';
 import 'package:movie_reference/styles.dart';
+import 'package:movie_reference/widgets/person_item.dart';
 // import 'package:movie_reference/styles.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -79,6 +80,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(peopleDetail.profilePath.toString()),
+                  onError: (exception, stackTrace) => const DummyPersonItem(),
                   fit: BoxFit.cover),
             ),
             foregroundDecoration:
@@ -99,6 +101,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
                       width: 202.5,
                       child: Image.network(
                         peopleDetail.profilePath.toString(),
+                        errorBuilder: (context, error, stackTrace) => const DummyPersonItem(errorText: "Profile Image Not Found",),
                         fit: BoxFit.cover,
                       ),
                     ),

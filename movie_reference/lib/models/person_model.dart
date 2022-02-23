@@ -30,7 +30,7 @@ class Person {
         knownForDepartment: json["known_for_department"],
         name: json["name"],
         popularity: json["popularity"].toDouble(),
-        profilePath: "https://image.tmdb.org/t/p/w500/"+json["profile_path"],
+        profilePath: json["profile_path"]==null?"":"https://image.tmdb.org/t/p/w500/"+json["profile_path"],
     );
 }
 

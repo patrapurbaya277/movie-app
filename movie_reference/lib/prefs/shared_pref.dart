@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:movie_reference/models/movie_model.dart';
 import 'package:movie_reference/prefs/saved_movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +17,7 @@ class WatchListMovie {
 
   static deleteItem(SavedMovie item) {
     watchList.remove(item);
-    print("deleted");
+    // print("deleted");
   }
 
   static saveList() async {

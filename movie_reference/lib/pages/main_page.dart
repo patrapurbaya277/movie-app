@@ -1,4 +1,4 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+// import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_reference/pages/home_page.dart';
 import 'package:movie_reference/pages/search_page.dart';
@@ -21,25 +21,6 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     WatchListMovie.loadList();
     super.initState();
-  }
-
-  Future<bool> _onWillPop() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Apakah anda yakin ingin keluar aplikasi ?"),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("Batal")),
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Text("Ya")),
-            ],
-          );
-        });
-    return false;
   }
 
   @override
@@ -118,31 +99,85 @@ class _MainPageState extends State<MainPage> {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (BuildContext context) =>
-                        //             const SearchPage()));
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(100))),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Container(
-                                        child: Text("Search Movies"),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const SearchPage()));
+                        // showModalBottomSheet(
+                        //     context: context,
+                        //     backgroundColor: Colors.transparent,
+                        //     builder: (context) {
+                        //       return Container(
+                        //         decoration: BoxDecoration(
+                        //             color: backgroundColor,
+                        //             borderRadius: const BorderRadius.vertical(
+                        //                 top: Radius.circular(20))),
+                        //         child: Column(
+                        //           mainAxisSize: MainAxisSize.min,
+                        //           children: [
+                        //             TextButton(
+                        //               onPressed: () {
+                        //                 Navigator.pop(context);
+                        //                 Navigator.push(
+                        //                     context,
+                        //                     MaterialPageRoute(
+                        //                         builder:
+                        //                             (BuildContext context) =>
+                        //                                 const SearchPage(
+                        //                                   type: "movies",
+                        //                                 )));
+                        //               },
+                        //               child: Container(
+                        //                 margin: const EdgeInsets.symmetric(
+                        //                     vertical: 5),
+                        //                 child: Text("Search Movies",
+                        //                     style: TextStyle(color: mainColor)),
+                        //               ),
+                        //             ),
+                        //             TextButton(
+                        //               onPressed: () {
+                        //                 Navigator.pop(context);
+                        //                 Navigator.push(
+                        //                     context,
+                        //                     MaterialPageRoute(
+                        //                         builder:
+                        //                             (BuildContext context) =>
+                        //                                 const SearchPage(
+                        //                                   type: "tv",
+                        //                                 )));
+                        //               },
+                        //               child: Container(
+                        //                 margin: const EdgeInsets.symmetric(
+                        //                     vertical: 5),
+                        //                 child: Text("Search Tv Shows",
+                        //                     style: TextStyle(color: mainColor)),
+                        //               ),
+                        //             ),
+                        //             TextButton(
+                        //               onPressed: () {
+                        //                 Navigator.pop(context);
+                        //                 Navigator.push(
+                        //                     context,
+                        //                     MaterialPageRoute(
+                        //                         builder:
+                        //                             (BuildContext context) =>
+                        //                                 const SearchPage(
+                        //                                   type: "people",
+                        //                                 )));
+                                        
+                        //               },
+                        //               child: Container(
+                        //                 margin: const EdgeInsets.symmetric(
+                        //                     vertical: 5),
+                        //                 child: Text("Search People",
+                        //                     style: TextStyle(color: mainColor)),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       );
+                        //     });
                       },
                       child: const Icon(
                         Icons.search,
