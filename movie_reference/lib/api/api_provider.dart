@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movie_reference/models/movie_model.dart';
 import 'package:movie_reference/models/person_model.dart';
-import 'package:movie_reference/models/tvshow_model.dart';
+import 'package:movie_reference/models/tv_show_model.dart';
 
 class ApiProvider {
   static Uri baseApiUrl(String endPoint) =>

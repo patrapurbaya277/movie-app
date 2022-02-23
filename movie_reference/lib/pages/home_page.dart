@@ -5,7 +5,7 @@ import 'package:movie_reference/api/api_provider.dart';
 // import 'package:movie_reference/widgets/movie_item.dart';
 import 'package:movie_reference/widgets/movies_builder.dart';
 import 'package:movie_reference/widgets/people_builder.dart';
-import 'package:movie_reference/widgets/tvshows_builder.dart';
+import 'package:movie_reference/widgets/tv_shows_builder.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

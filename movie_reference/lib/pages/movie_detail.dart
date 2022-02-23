@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movie_reference/api/api_provider.dart';
-import 'package:movie_reference/genres.dart';
 import 'package:movie_reference/models/movie_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_reference/prefs/saved_movie.dart';
+import 'package:movie_reference/prefs/shared_pref.dart';
 import 'package:movie_reference/styles.dart';
 // import 'package:movie_reference/styles.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -28,17 +29,26 @@ class _MovieDetailState extends State<MovieDetail> {
       color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15);
   TextStyle normal = const TextStyle(color: Colors.white, fontSize: 14);
   MovieDetailClass movieDetail = MovieDetailClass();
+  SavedMovie savedMovie = SavedMovie();
   bool loading = true;
+
   getDetail() async {
     http.Response response;
     response = await http
         .get(ApiProvider.baseApiUrl("movie/${widget.movieId}?language=en-US"));
     final jsonData = jsonDecode((response.body).toString());
-    setState(() {
-      loading = false;
-      movieDetail = MovieDetailClass.fromJson(jsonData);
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+        movieDetail = MovieDetailClass.fromJson(jsonData);
+        savedMovie = SavedMovie(
+            id: movieDetail.id.toString(),
+            image: movieDetail.posterPath,
+            type: "movie");
+      });
+    }
   }
+
   @override
   void initState() {
     getDetail();
@@ -52,16 +62,91 @@ class _MovieDetailState extends State<MovieDetail> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text("Movie Details"),
-        actions: [
-          InkWell(
-            onTap: () {},
-            child: const Icon(
-              Icons.playlist_add,
-              color: Colors.white,
+        // actions: [
+        //   InkWell(
+        //     onTap: () {
+        //       if (WatchListMovie.watchList
+        //           .where((e) => e.id == savedMovie.id)
+        //           .isEmpty) {
+        //         WatchListMovie.addToList(savedMovie);
+        //         WatchListMovie.saveList();
+        //         setState(() {});
+        //       } else if (WatchListMovie.watchList
+        //           .where((e) => e.id == savedMovie.id)
+        //           .isNotEmpty) {
+        //         WatchListMovie.watchList
+        //             .removeWhere((element) => element.id == savedMovie.id);
+        //         WatchListMovie.saveList();
+        //         setState(() {});
+        //       }
+        //     },
+        //     child: WatchListMovie.watchList
+        //             .where((e) => e.id == savedMovie.id)
+        //             .isEmpty
+        //         ? const Icon(
+        //             Icons.playlist_add,
+        //             color: Colors.white,
+        //           )
+        //         : const Icon(
+        //             Icons.playlist_add_check,
+        //             color: Colors.white,
+        //           ),
+        //   ),
+        //   const SizedBox(width: 20),
+        // ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: TextButton(
+          onPressed: () {
+            if (WatchListMovie.watchList
+                .where((e) => e.id == savedMovie.id)
+                .isEmpty) {
+              WatchListMovie.addToList(savedMovie);
+              WatchListMovie.saveList();
+              setState(() {});
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Added to Watch List"),
+                  behavior: SnackBarBehavior.fixed,
+                ),
+              );
+            } else if (WatchListMovie.watchList
+                .where((e) => e.id == savedMovie.id)
+                .isNotEmpty) {
+              WatchListMovie.watchList
+                  .removeWhere((element) => element.id == savedMovie.id);
+              WatchListMovie.saveList();
+              setState(() {});
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Removed from Watch List")));
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: WatchListMovie.watchList
+                      .where((e) => e.id == savedMovie.id)
+                      .isEmpty
+                  ? mainColor
+                  : mainColorDark,
+              shape: BoxShape.circle,
             ),
+            child: WatchListMovie.watchList
+                    .where((e) => e.id == savedMovie.id)
+                    .isEmpty
+                ? const Icon(
+                    Icons.playlist_add,
+                    color: Colors.white,
+                    size: 30,
+                  )
+                : Icon(
+                    Icons.playlist_add_check,
+                    color: Colors.white.withOpacity(0.5),
+                    size: 30,
+                  ),
           ),
-          const SizedBox(width: 20),
-        ],
+        ),
       ),
       body: loading
           ? Center(
@@ -158,8 +243,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   style: header,
                                 ),
                                 Text(
-                                  movieDetail.genres
-                                      .toString(),
+                                  movieDetail.genres.toString(),
                                   style: normal,
                                 ),
                                 const SizedBox(
@@ -201,8 +285,13 @@ class _MovieDetailState extends State<MovieDetail> {
                         height: 5,
                       ),
                       Text(
-                        movieDetail.overview!=""?movieDetail.overview.toString():"No Data",
+                        movieDetail.overview != ""
+                            ? movieDetail.overview.toString()
+                            : "No Data",
                         style: normal,
+                      ),
+                      SizedBox(
+                        height: 50,
                       ),
                     ],
                   ),

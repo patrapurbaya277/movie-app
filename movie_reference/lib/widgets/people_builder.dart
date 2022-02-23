@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie_reference/models/person_model.dart';
 // import 'package:movie_reference/models/movie_model.dart';
-import 'package:movie_reference/models/tvshow_model.dart';
+// import 'package:movie_reference/models/tvshow_model.dart';
 import 'package:movie_reference/widgets/my_shimmer.dart';
 import 'package:movie_reference/widgets/person_item.dart';
 // import 'package:shimmer/shimmer.dart';
 
 // import 'movie_item.dart';
-import 'tv_item.dart';
+// import 'tv_item.dart';
 
 class PeopleBuilder extends StatelessWidget {
   final String title;

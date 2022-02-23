@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie_reference/models/tv_show_model.dart';
 // import 'package:movie_reference/models/movie_model.dart';
-import 'package:movie_reference/models/tvshow_model.dart';
+// import 'package:movie_reference/models/tvshow_model.dart';
 import 'package:movie_reference/widgets/my_shimmer.dart';
 // import 'package:shimmer/shimmer.dart';
 

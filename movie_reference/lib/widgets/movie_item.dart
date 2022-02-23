@@ -1,7 +1,7 @@
 // import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:movie_reference/api/api_provider.dart';
+// import 'package:movie_reference/api/api_provider.dart';
 import 'package:movie_reference/models/movie_model.dart';
 import 'package:movie_reference/pages/movie_detail.dart';
 import 'package:movie_reference/widgets/my_shimmer.dart';
