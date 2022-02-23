@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:movie_reference/prefs/saved_movie.dart';
 import 'package:movie_reference/prefs/shared_pref.dart';
 import 'package:movie_reference/styles.dart';
+import 'package:movie_reference/widgets/movie_item.dart';
 // import 'package:movie_reference/styles.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -106,7 +107,7 @@ class _MovieDetailState extends State<MovieDetail> {
               WatchListMovie.saveList();
               setState(() {});
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text("Added to Watch List"),
                   behavior: SnackBarBehavior.fixed,
                 ),
@@ -119,7 +120,7 @@ class _MovieDetailState extends State<MovieDetail> {
               WatchListMovie.saveList();
               setState(() {});
               ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Removed from Watch List")));
+                  const SnackBar(content: Text("Removed from Watch List")));
             }
           },
           child: Container(
@@ -161,7 +162,10 @@ class _MovieDetailState extends State<MovieDetail> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(movieDetail.posterPath.toString()),
+                      onError: (exception, stackTrace) => const DummyMovieItem(),
+                        image: NetworkImage(
+                          movieDetail.posterPath.toString(),
+                        ),
                         fit: BoxFit.cover),
                   ),
                   foregroundDecoration:
@@ -183,6 +187,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             width: 202.5,
                             child: Image.network(
                               movieDetail.posterPath.toString(),
+                              errorBuilder: (context, error, stackTrace) => const DummyMovieItem(errorText: "Movie Image Not Found",),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -220,8 +225,9 @@ class _MovieDetailState extends State<MovieDetail> {
                                   style: header,
                                 ),
                                 Text(
+                                  movieDetail.releaseDate!=null?
                                   DateFormat("dd MMM yyyy")
-                                      .format(movieDetail.releaseDate!),
+                                      .format(movieDetail.releaseDate!):"No Data",
                                   style: normal,
                                 ),
                                 const SizedBox(
@@ -232,7 +238,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   style: header,
                                 ),
                                 Text(
-                                  movieDetail.popularity.toString(),
+                                  movieDetail.popularity!=null?movieDetail.popularity.toString():"No Data",
                                   style: normal,
                                 ),
                                 const SizedBox(
@@ -286,11 +292,11 @@ class _MovieDetailState extends State<MovieDetail> {
                       ),
                       Text(
                         movieDetail.overview != ""
-                            ? movieDetail.overview.toString()
+                            ? movieDetail.overview??"No Data"
                             : "No Data",
                         style: normal,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                     ],

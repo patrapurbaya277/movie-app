@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_reference/models/person_model.dart';
 // import 'package:movie_reference/pages/movie_detail.dart';
 import 'package:movie_reference/pages/people_detail.dart';
+import 'package:movie_reference/styles.dart';
 import 'package:movie_reference/widgets/my_shimmer.dart';
 // import 'package:shimmer/shimmer.dart';
 
@@ -27,6 +28,7 @@ class PersonItem extends StatelessWidget {
           width: 135,
           child: Image.network(
             person.profilePath,
+            errorBuilder: (context, error, stackTrace) => const DummyPersonItem(errorText: "Profile Image Not Found",),
             loadingBuilder: (context, child, loadingProgress) =>
                 loadingProgress == null
                     ? child
@@ -39,7 +41,9 @@ class PersonItem extends StatelessWidget {
 }
 
 class DummyPersonItem extends StatelessWidget {
+  final String? errorText;
   const DummyPersonItem({
+    this.errorText,
     Key? key,
   }) : super(key: key);
 
@@ -50,10 +54,11 @@ class DummyPersonItem extends StatelessWidget {
       margin: const EdgeInsets.all(3),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: Colors.white
+        color: mainColor
       ),
       height: 200,
       width: 135,
+      child: Center(child: Text(errorText??"",textAlign: TextAlign.center,style: const TextStyle(color: Colors.red),)),
     );
   }
 }

@@ -46,6 +46,10 @@ class MoviesBuilder extends StatelessWidget {
                   ),
                 );
               }
+              if(!snapshot.hasData){
+                return const Text("No Data",
+                  style: TextStyle(color: Colors.grey));
+              }
               return SizedBox(
                 height: 200,
                 child: MyShimmer(
