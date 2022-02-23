@@ -54,8 +54,8 @@ class TVShowsBuilder extends StatelessWidget {
                 );
               }
               if (snapshot.hasError) {
-                return const Text("No Data",
-                    style: TextStyle(color: Colors.grey));
+                return const Text("Data Error",
+                    style: TextStyle(color: Colors.red));
               }
               return SizedBox(
                 height: 200,
