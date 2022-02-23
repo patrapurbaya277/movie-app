@@ -2,8 +2,8 @@
     package="com.example.movie_reference">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="movie_reference"
-        android:name="Movie Holic"
+        android:label="Movie Holic"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
